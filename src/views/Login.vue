@@ -1,10 +1,13 @@
 <template>
     <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" v-model="email">
-        <label for="email">パスワード</label>
-        <input type="password" name="password" v-model="password">
-        <button @click="login">送信する</button>
+        <h2>登録</h2>
+        <label for="email">Email：</label>
+        <input type="email" id="email" v-model="email">
+        <br><br>
+        <label for="password">パスワード：</label>
+        <input type="password" id="password" v-model="password">
+        <br><br>
+        <button @click="login">送信</button>
     </div>
 </template>
 
@@ -13,7 +16,7 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
         }
     },
     methods: {
@@ -22,8 +25,8 @@ export default {
                 email: this.email,
                 password: this.password
             })
-            this.email = ''
-            this.password = ''
+            this.email = '';
+            this.password = '';
         }
     }
 }

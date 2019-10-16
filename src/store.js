@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from './axios-auth'
-import router from 'vue-router'
+import router from './router'
 
 Vue.use(Vuex)
 
@@ -12,15 +12,31 @@ export default new Vuex.Store({
 
     },
     actions: {
-        login(authData) {
+        register({ dispatch }, authData) {
             axios.post(
-                '/accounts:signInWithPassword?key=AIzaSyCNCXMjFtBt3UF95HRh4Codds2A3-L29ec',
+                '/accounts:signUp?key=AIzaSyAd6jBVe21o9cBXPZlPHvs_NgmlyAHmqtw',
                 {
-                    'email': authData.email,
-                    'password': authData.password
+                    email: authData.email,
+                    password: authData.password,
+                    returnSecureToken: true,
                 }
             )
-            .then(() => {
+            .then(response => {
+                console.log(response)
+                router.push('/')
+            })
+        },
+        login({ dispatch }, authData) {
+            axios.post(
+                '/accounts:signInWithPassword?key=AIzaSyAd6jBVe21o9cBXPZlPHvs_NgmlyAHmqtw',
+                {
+                    email: authData.email,
+                    password: authData.password,
+                    returnSecureToken: true,
+                }
+            )
+            .then(response => {
+                console.log(response)
                 // dispatch('setAuthData', {
                 //     idToken: response.idToken
                 // })
