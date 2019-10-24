@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <template v-if="isAuthentication">
+    <template v-if="isAuthentificated">
       <router-link to="/" class="header-item">掲示板</router-link>
     </template>
-    <template v-if="! isAuthentication">
+    <template v-if="! isAuthentificated">
       <router-link to="/login" class="header-item">ログイン</router-link>
       <router-link to="/register" class="header-item">登録</router-link>
     </template>
@@ -13,10 +13,9 @@
 
 <script>
 export default {
-  name: 'app',
   computed: {
-    isAuthentication() {
-      // 認証トークンの有無チェック
+    isAuthentificated() {
+      return this.$store.getters.idToken !== null
     }
   }
 }

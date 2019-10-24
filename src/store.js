@@ -7,12 +7,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        idToken: null
+    },
+    getters: {
+        idToken: state => state.idToken
     },
     mutations: {
-
+        updateIdToken(state, idToken) {
+            state.idToken = idToken
+        },
     },
     actions: {
-        register({ dispatch }, authData) {
+        register({ commit }, authData) {
             axios.post(
                 '/accounts:signUp?key=AIzaSyAd6jBVe21o9cBXPZlPHvs_NgmlyAHmqtw',
                 {
@@ -22,11 +28,11 @@ export default new Vuex.Store({
                 }
             )
             .then(response => {
-                console.log(response)
+                commit('updateIdToken', response.data.idToken)
                 router.push('/')
             })
         },
-        login({ dispatch }, authData) {
+        login({ commit }, authData) {
             axios.post(
                 '/accounts:signInWithPassword?key=AIzaSyAd6jBVe21o9cBXPZlPHvs_NgmlyAHmqtw',
                 {
@@ -36,15 +42,9 @@ export default new Vuex.Store({
                 }
             )
             .then(response => {
-                console.log(response)
-                // dispatch('setAuthData', {
-                //     idToken: response.idToken
-                // })
+                commit('updateIdToken', response.data.idToken)
                 router.push('/')
             });
         },
-        setAuthData(authData) {
-            localStorage.setItem('idAToken', authData.idToken)
-        }
     }
 });
