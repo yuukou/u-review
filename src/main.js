@@ -6,25 +6,31 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
-axios.interceptors.request.use(
-  config => {
-    return config;
-  },
-  error => {
-    Promise.reject(error);
-  },
-)
-axios.interceptors.response.use(
-  config => {
-    return config;
-  },
-  error => {
-    Promise.reject(error);
-  },
-)
+const interceptorsRequest = axios.interceptors.request.use(
+    config => {
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 
+const interceptorsResponse = axios.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
+
+axios.interceptors.request.eject(interceptorsRequest);
+axios.interceptors.response.eject(interceptorsResponse);
+
+
+store.dispatch('autoLogin')
 new Vue({
-  router,
-  store,
-  render: h => h(App),
+    router,
+    store,
+    render: h => h(App),
 }).$mount('#app')
