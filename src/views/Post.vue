@@ -13,9 +13,9 @@
         <div class="board">
             <h2>掲示板</h2>
             <div>
-                <div v-for="(comment, index) in comments" :key="index">
-                    <div>名前:{{ comment.fields.name.stringValue }}</div>
-                    <div>投稿:{{ comment.fields.post.stringValue }}</div>
+                <div v-for="(postContent, index) in postContents" :key="index">
+                    <div>名前:{{ postContent.fields.name.stringValue }}</div>
+                    <div>投稿:{{ postContent.fields.post.stringValue }}</div>
                     <hr>
                 </div>
             </div>
@@ -24,27 +24,27 @@
 </template>
 
 <script>
-import axiosComment from '../axios-comment';
+import axiosPost from '../axios-post';
 export default {
     data() {
         return {
             name: '',
             post: '',
-            comments: []
+            postContents: []
         }
     },
     // DOM読み込み時に投稿内容を取得する
     created() {
-        axiosComment.get(
+        axiosPost.get(
             '/posts',
         )
         .then(response => {
-            this.comments = response.data.documents
+            this.postContents = response.data.documents
         })
     },
     methods: {
         submit() {
-            axiosComment.post(
+            axiosPost.post(
                 '/posts',
                 {
                     fields: {
@@ -54,11 +54,11 @@ export default {
                 },
             )
             .then(response => {
-                if (this.comments) {
-                    this.comments.push(response.data)
+                if (this.postContents) {
+                    this.postContents.push(response.data)
                 } else {
-                    this.comments = [];
-                    this.comments.push(response.data);
+                    this.postContents = [];
+                    this.postContents.push(response.data);
                 }
             })
             this.name = '';

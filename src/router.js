@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Comment from './views/Comment.vue'
+import Post from './views/Post.vue'
 import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 import store from './store'
@@ -9,12 +9,11 @@ Vue.use(Router)
 
 export default new Router({
     mode: 'history',
-    routes: [
-        {
+    routes: [{
             path: '/',
-            component: Comment,
+            component: Post,
             beforeEnter(to, from, next) {
-                if(store.getters.idToken) {
+                if (store.getters.idToken) {
                     next()
                 } else {
                     next('/login')
@@ -25,7 +24,7 @@ export default new Router({
             path: '/login',
             component: Login,
             beforeEnter(to, from, next) {
-                if(store.getters.idToken) {
+                if (store.getters.idToken) {
                     next('/')
                 } else {
                     next()
@@ -36,7 +35,7 @@ export default new Router({
             path: '/register',
             component: Register,
             beforeEnter(to, from, next) {
-                if(store.getters.idToken) {
+                if (store.getters.idToken) {
                     next('/')
                 } else {
                     next()
