@@ -2,6 +2,7 @@
   <div id="app">
     <template v-if="isAuthentificated">
       <router-link to="/" class="header-item">掲示板</router-link>
+      <a href="javascript:void(0)" @click="logout">ログアウト</a>
     </template>
     <template v-if="! isAuthentificated">
       <router-link to="/login" class="header-item">ログイン</router-link>
@@ -17,6 +18,11 @@ export default {
     isAuthentificated() {
       return this.$store.getters.idToken !== null
     }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+    },
   }
 }
 </script>

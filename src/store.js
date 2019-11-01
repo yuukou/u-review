@@ -19,10 +19,10 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        autoLogin({ commit, dispatch }) {
+        autoLogin({ commit, dispatch }, redirectUrl) {
             var idToken = localStorage.getItem('idToken')
             if (!idToken) {
-                router.push('/register')
+                router.push(redirectUrl)
             }
             const expiresTimeMs = localStorage.getItem('expiresTimeMs')
             const now = new Date();
@@ -98,5 +98,12 @@ export default new Vuex.Store({
                 dispatch('refreshIdToken', authData.refreshToken)
             }, authData.expiresIn * 1000)
         },
+        logout({ commit, dispatch }) {
+            localStorage.removeItem('idToken')
+            localStorage.removeItem('expiresTimeMs')
+            localStorage.removeItem('refreshToken')
+            commit('updateIdToken', null)
+            dispatch('autoLogin', '/login')
+        }
     }
 });

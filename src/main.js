@@ -28,7 +28,7 @@ axios.interceptors.request.eject(interceptorsRequest);
 axios.interceptors.response.eject(interceptorsResponse);
 
 
-store.dispatch('autoLogin')
+store.dispatch('autoLogin', '/register')
 new Vue({
     router,
     store,
